@@ -65,7 +65,7 @@
 				border-radius: 3px;
 				outline: none;
 				box-shadow: inset 0 1px 2px rgba(27,31,35,0.075);
-				width: 45%;
+				width: 93.5%;
 			}
 			#userport {
 				text-align: center;
@@ -125,26 +125,34 @@
 				width: 400px;
 				background-color: #efefef;
 			}
+			#odai {
+				font-size: 30px;
+			}
 		</style>
 	</head>
 	<body>
 		<div style="text-align: center;">
 			<br><br>
-			<input id="username" type="text" placeholder="ニックネーム" value="無名" class="texput">
-			<input id="text" type="text" placeholder="メッセージを入力" class="texput"><br><br>
+			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
+			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
+			<input id="user" type="text" placeholder="ニックネーム" class="texput" value="無名さん"><br><br>
+			<input id="username" type="text" placeholder="メッセージを入力" class="texput"><br><br>
 			<button id="post" class="btn purp">送信</button><br/>
 		</div>
 		<div id="results"></div>
 		<script>
 			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com/');
+			var use = document.querySelector('#user').value;
+			var user = document.querySelector('#user');
 			var usernameInput = document.querySelector('#username');
 			var textInput = document.querySelector('#text');
 			var postButton = document.querySelector('#post');
 			postButton.addEventListener("click", function() {
-				var msgUser = usernameInput.value;
+				var msgUser = use + "は「" + usernameInput.value + "」と答えました";
 				var msgText = textInput.value;
 				myFirebase.set(msgUser + " の答えは、 " + msgText);
 				textInput.value = "";
+				user.disable = true;
 			});
 			postButton.addEventListener("click", function() {
 				var msgUser = usernameInput.value;
@@ -157,8 +165,10 @@
 					var msg = snapshot.val();   
 					var msgUsernameElement = document.createElement("b");
 					msgUsernameElement.textContent = msg.username;
+					
 					var msgTextElement = document.createElement("p");
 					msgTextElement.textContent = msg.text;
+					
 					var msgElement = document.createElement("div");
 					msgElement.appendChild(msgUsernameElement);
 					msgElement.appendChild(msgTextElement);

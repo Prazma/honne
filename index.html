@@ -1,1 +1,172 @@
-In Maintenance...
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>HonNe! - 無名の自分だからこその答えをお題に！</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<script src='https://cdn.firebase.com/js/client/2.4.0/firebase.js'></script>
+		<style>
+			body {
+				background: #fafbfc;
+				margin: 0;
+				font-family: sans-serif;
+			}
+			#proport{
+				position: fixed;
+				bottom: 200px;
+				width: 100%;
+				transition: 0.5s;
+				-webkit-transition: 0.5s;
+			}
+			.btn {
+				-webkit-appearance: button;
+				padding: 3px 10px;
+				font-size: 12px;
+				line-height: 20px;
+				color: #24292e;
+				background-color: #eff3f6;
+				background-image: -webkit-linear-gradient(270deg, #fafbfc 0%, #eff3f6 90%);
+				background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
+				position: relative;
+				display: inline-block;
+				padding: 6px 12px;
+				font-size: 14px;
+				font-weight: 600;
+				line-height: 20px;
+				white-space: nowrap;
+				vertical-align: middle;
+				cursor: pointer;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				background-repeat: repeat-x;
+				background-position: -1px -1px;
+				background-size: 110% 110%;
+				border: 1px solid rgba(27,31,35,0.2);
+				border-radius: 0.25em;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+				width: 95%;
+				margin: 5px;
+			}
+			.texput {
+				min-height: 34px;
+				padding: 0px 8px;
+				font-size: 14px;
+				line-height: 20px;
+				color: #24292e;
+				vertical-align: middle;
+				background-color: #fff;
+				background-repeat: no-repeat;
+				background-position: right 8px center;
+				border: 1px solid #d1d5da;
+				border-radius: 3px;
+				outline: none;
+				box-shadow: inset 0 1px 2px rgba(27,31,35,0.075);
+				width: 45%;
+			}
+			#userport {
+				text-align: center;
+				width: 90%;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 5px;
+				background: #f1f8ff;
+				border: 1px solid #c8e1ff;
+				border-radius: 3px;
+			}
+			.purp {
+				background-color: #5260B0;
+				background-image: -webkit-linear-gradient(270deg, #6576C6 0%, #39469C 90%);
+				background-image: linear-gradient(-180deg, #6576C6 0%, #39469C 90%);
+				color: #ffffff;
+			}
+			#navix {
+				position: fixed;
+				top: 0;
+				background: #39469C;
+				width: 100%;
+				color: white;
+				font-size: 35px;
+				font-family: monospace;
+				padding: 0px 0px 5px 0px;
+				box-shadow: 0px 3px 10px #6576C6;
+			}
+			#list {
+				margin-top: 50px;
+				background: #f1f1f1;
+				width: 90%;
+				padding: 8px;
+				margin-left: auto;
+				margin-right: auto;
+				border: 1px #bfbfbf solid;
+				border-radius: 3px;
+				text-align: center;
+				font-family: sans-serif;
+				transition: 0.5s;
+				-webkit-transition: 0.5s;
+			}
+			#splash {
+				position: fixed;
+				top: 0;
+				width: 100%;
+				height: 100vh;
+				background: #ffffff;
+				text-align: center;
+				color: #ffffff;
+				transition: 0.5s;
+				-webkit-transition: 0.5s;
+			}
+			.msg {
+				margin: 10px 0;
+				padding: 10px;
+				width: 400px;
+				background-color: #efefef;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="text-align: center;">
+			<br><br>
+			<input id="username" type="text" placeholder="ニックネーム" value="無名" class="texput">
+			<input id="text" type="text" placeholder="メッセージを入力" class="texput"><br><br>
+			<button id="post" class="btn purp">送信</button><br/>
+		</div>
+		<div id="results"></div>
+		<script>
+			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com/');
+			var usernameInput = document.querySelector('#username');
+			var textInput = document.querySelector('#text');
+			var postButton = document.querySelector('#post');
+			postButton.addEventListener("click", function() {
+				var msgUser = usernameInput.value;
+				var msgText = textInput.value;
+				myFirebase.set(msgUser + " の答えは、 " + msgText);
+				textInput.value = "";
+			});
+			postButton.addEventListener("click", function() {
+				var msgUser = usernameInput.value;
+				var msgText = textInput.value;
+				myFirebase.push({username:msgUser, text:msgText});
+				textInput.value = "";
+			});
+			var startListening = function() {
+				myFirebase.on('child_added', function(snapshot) {
+					var msg = snapshot.val();   
+					var msgUsernameElement = document.createElement("b");
+					msgUsernameElement.textContent = msg.username;
+					var msgTextElement = document.createElement("p");
+					msgTextElement.textContent = msg.text;
+					var msgElement = document.createElement("div");
+					msgElement.appendChild(msgUsernameElement);
+					msgElement.appendChild(msgTextElement);
+					msgElement.className = "msg";
+					document.getElementById("results").appendChild(msgElement);
+				});
+			}
+			startListening();
+		</script>
+	</body>
+</html>

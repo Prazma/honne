@@ -150,7 +150,7 @@
 			<br>
 		</div>
 		<div id="results"></div>
-		<div id="scrollis">(c)2017 BitFinity Inc</div>
+		<div id="scrollis">©2017 BitFinity Inc</div>
 		<script>
 			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com/');
 			var usernameInput = document.querySelector('#username');
@@ -181,7 +181,7 @@
 					document.getElementById("results").appendChild(msgElement);
 					
 					document.getElementById("results").appendChild(msgElement);
-					$("html, body").animate({ scrollTop: $("#scrollis").scrollTop() }, 1000);
+					window.scrollTo(0,document.body.scrollHeight);
 				});
 			}
 			startListening();

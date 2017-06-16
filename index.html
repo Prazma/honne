@@ -5,6 +5,7 @@
 		<title>HonNe! - 無名の自分だからこその答えをお題に！</title>
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<script src='https://cdn.firebase.com/js/client/2.4.0/firebase.js'></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<style>
 			body {
 				background: #fafbfc;
@@ -132,6 +133,7 @@
 			}
 			#results {
 				margin-top: 310px;
+				margin-bottom: 20px;
 			}
 		</style>
 	</head>
@@ -139,13 +141,16 @@
 		<div style="text-align: center;" id="input">
 			<br><br>
 			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
-			<span id="awards">選ばれた投稿の投稿者には<strong>５万円</strong>！</span><br><br>
+			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
 			<input id="username" type="text" placeholder="ニックネーム" value="無名さん" class="texput"><br/><br>
 			<input id="text" type="text" placeholder="答え" class="texput"><br><br>
-			<button id="post" class="btn purp">Post</button><br/>
+			<form action="#scrollis">
+				<input type="submit" id="post" class="btn purp" value="投稿"><br/>
+			</form>
 			<br>
 		</div>
 		<div id="results"></div>
+		<div id="scrollis">(c)2017 BitFinity Inc</div>
 		<script>
 			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com/');
 			var usernameInput = document.querySelector('#username');
@@ -176,6 +181,7 @@
 					document.getElementById("results").appendChild(msgElement);
 					
 					document.getElementById("results").appendChild(msgElement);
+					$("html, body").animate({ scrollTop: $("#scrollis").scrollTop() }, 1000);
 				});
 			}
 			startListening();

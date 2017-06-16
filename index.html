@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>HonNet - 無名の自分だからこその答えをお題に投稿するSNS・チャットサイト！</title>
 		<meta name="viewport" content="width=device-width, user-scalable=no">
-		<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+		<script src='https://cdn.firebase.com/js/client/2.4.0/firebase.js'></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<meta name="description" content="HonNe!で無名の状態で「お題」に答える自由・新感覚なチャットサイト!">
 		<link rel="apple-touch-icon" href="HonNe!.png">
@@ -138,16 +138,8 @@
 				box-shadow: 0px 5px 5px #888888;
 			}
 			#results {
-				margin-top: 310px;
+				margin-top: 350px;
 				margin-bottom: 20px;
-			}
-			#login {
-				padding: 0.5em 1em;
-				background-color: #DD4B39;
-				border: none;
-				color: #FFF;
-				cursor: pointer;
-				outline: none;
 			}
 		</style>
 	</head>
@@ -156,9 +148,9 @@
 			<br>
 			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
 			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
-			<button id="login">Login with Google</button><br><br/>
 			<input id="username" type="text" placeholder="ニックネーム" value="無名さん" class="texput"><br/><br>
 			<input id="text" type="text" placeholder="答え" class="texput"><br><br>
+			<input id="idbill" type="text" placeholder="ID (オプショナル：返信・いいね・稼ぐの機能が使えます)" class="texput"><br/><br>
 			<form action="#scrollis">
 				<input type="submit" id="post" class="btn purp" value="投稿"><br/>
 			</form>
@@ -171,22 +163,20 @@
 				document.getElementById("splash").style.display = "none";
 			}, 2000) 
 			window.scrollTo(0,document.body.scrollHeight);
-			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com/');
+			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com');
 			var usernameInput = document.querySelector('#username');
 			var textInput = document.querySelector('#text');
 			var postButton = document.querySelector('#post');
-			
-    var username = null;
-    var loginButton = document.querySelector('#login');
-    postButton.style.display = "none";
-    textInput.style.display = "none";
+			var idnix = document.querySelector('#idbill');
 			
 			postButton.addEventListener("click", function() {
 				var msgUser = usernameInput.value;
 				var msgText = textInput.value;
+				var idText = idnix.value;
 				
-				myFirebase.push({username:msgUser, text:msgText});
+				myFirebase.push({username:msgUser, text:msgText, id:idText});
 				textInput.value = "";
+				document.getElementById("idbill").style.display = "none";
 			});
 			
 			var startListening = function() {
@@ -209,29 +199,6 @@
 				});
 			}
 			startListening();
-		</script>
-		  <script>
-			  loginButton.addEventListener("click", function() {
-				  myFirebase.authWithOAuthPopup("google", function(error, authData) {
-					  if (error) {
-						  console.log(error);
-					  } else {
-						  console.log(authData);
-					  }
-				  }, {remember: "none"}); // will end authentication on page close/reload
-    });
-			  myFirebase.onAuth(function (authData) {
-    if (authData) {
-        username = authData.google.displayName;
-        loginButton.textContent = "Logged in as " + username;
-        loginButton.disabled = true;
-        postButton.style.display = "block";
-        textInput.style.display = "block";
-
-        // Start listening for data, remove previous calls to this method
-        startListening();
-    }
-   });
 		</script>
 		<div id="splash">
 			<br><br>

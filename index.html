@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		<meta charset="UTF-8">
 		<title>HonNe! - 無名の自分だからこその答えをお題に！</title>
@@ -67,7 +67,7 @@
 				box-shadow: inset 0 1px 2px rgba(27,31,35,0.075);
 				width: 93.5%;
 			}
-			#userport {
+			.msg {
 				text-align: center;
 				width: 90%;
 				margin-left: auto;
@@ -76,6 +76,7 @@
 				background: #f1f8ff;
 				border: 1px solid #c8e1ff;
 				border-radius: 3px;
+				margin-top: 10px;
 			}
 			.purp {
 				background-color: #5260B0;
@@ -119,50 +120,49 @@
 				transition: 0.5s;
 				-webkit-transition: 0.5s;
 			}
-			.msg {
-				margin: 10px 0;
-				padding: 10px;
-				width: 400px;
-				background-color: #efefef;
-			}
 			#odai {
 				font-size: 30px;
+			}
+			#input {
+				position: fixed;
+				top: 0;
+				width: 100%;
+				background: #f1f1f1;
+				box-shadow: 0px 5px 5px #888888;
+			}
+			#results {
+				margin-top: 310px;
 			}
 		</style>
 	</head>
 	<body>
-		<div style="text-align: center;">
+		<div style="text-align: center;" id="input">
 			<br><br>
 			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
 			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
-			<input id="user" type="text" placeholder="ニックネーム" class="texput" value="無名さん"><br><br>
-			<input id="username" type="text" placeholder="メッセージを入力" class="texput"><br><br>
-			<button id="post" class="btn purp">送信</button><br/>
+			<input id="username" type="text" placeholder="Name" value="無名さん" class="texput"><br/><br>
+			<input id="text" type="text" placeholder="Message" class="texput"><br><br>
+			<button id="post" class="btn purp">Post</button><br/>
+			<br>
 		</div>
 		<div id="results"></div>
 		<script>
 			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com/');
-			var use = document.querySelector('#user').value;
-			var user = document.querySelector('#user');
 			var usernameInput = document.querySelector('#username');
 			var textInput = document.querySelector('#text');
 			var postButton = document.querySelector('#post');
-			postButton.addEventListener("click", function() {
-				var msgUser = use + "は「" + usernameInput.value + "」と答えました";
-				var msgText = textInput.value;
-				myFirebase.set(msgUser + " の答えは、 " + msgText);
-				textInput.value = "";
-				user.disable = true;
-			});
+			
 			postButton.addEventListener("click", function() {
 				var msgUser = usernameInput.value;
 				var msgText = textInput.value;
+				
 				myFirebase.push({username:msgUser, text:msgText});
 				textInput.value = "";
 			});
+			
 			var startListening = function() {
 				myFirebase.on('child_added', function(snapshot) {
-					var msg = snapshot.val();   
+					var msg = snapshot.val();
 					var msgUsernameElement = document.createElement("b");
 					msgUsernameElement.textContent = msg.username;
 					
@@ -173,6 +173,8 @@
 					msgElement.appendChild(msgUsernameElement);
 					msgElement.appendChild(msgTextElement);
 					msgElement.className = "msg";
+					document.getElementById("results").appendChild(msgElement);
+					
 					document.getElementById("results").appendChild(msgElement);
 				});
 			}

@@ -153,6 +153,9 @@
 		<div id="results"></div>
 		<div id="scrollis">©2017 BitFinity Inc</div>
 		<script>
+			setTimeout( function () {
+				document.getElementById("splash").style.display = "none";
+			}, 2000) 
 			window.scrollTo(0,document.body.scrollHeight);
 			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com/');
 			var usernameInput = document.querySelector('#username');
@@ -188,5 +191,9 @@
 			}
 			startListening();
 		</script>
+		<div id="splash">
+			<br><br>
+			<img src="HonNe!.png" height="100px">
+		</div>
 	</body>
 </html>

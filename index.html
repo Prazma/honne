@@ -141,6 +141,14 @@
 				margin-top: 310px;
 				margin-bottom: 20px;
 			}
+			#login {
+				padding: 0.5em 1em;
+				background-color: #DD4B39;
+				border: none;
+				color: #FFF;
+				cursor: pointer;
+				outline: none;
+			}
 		</style>
 	</head>
 	<body>
@@ -148,6 +156,7 @@
 			<br>
 			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
 			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
+			<button id="login">Login with Google</button><br><br/>
 			<input id="username" type="text" placeholder="ニックネーム" value="無名さん" class="texput"><br/><br>
 			<input id="text" type="text" placeholder="答え" class="texput"><br><br>
 			<form action="#scrollis">
@@ -166,6 +175,11 @@
 			var usernameInput = document.querySelector('#username');
 			var textInput = document.querySelector('#text');
 			var postButton = document.querySelector('#post');
+			
+    var username = null;
+    var loginButton = document.querySelector('#login');
+    postButton.style.display = "none";
+    textInput.style.display = "none";
 			
 			postButton.addEventListener("click", function() {
 				var msgUser = usernameInput.value;
@@ -195,6 +209,29 @@
 				});
 			}
 			startListening();
+		</script>
+		  <script>
+			  loginButton.addEventListener("click", function() {
+				  myFirebase.authWithOAuthPopup("google", function(error, authData) {
+					  if (error) {
+						  console.log(error);
+					  } else {
+						  console.log(authData);
+					  }
+				  }, {remember: "none"}); // will end authentication on page close/reload
+    });
+			  myFirebase.onAuth(function (authData) {
+    if (authData) {
+        username = authData.google.displayName;
+        loginButton.textContent = "Logged in as " + username;
+        loginButton.disabled = true;
+        postButton.style.display = "block";
+        textInput.style.display = "block";
+
+        // Start listening for data, remove previous calls to this method
+        startListening();
+    }
+   });
 		</script>
 		<div id="splash">
 			<br><br>

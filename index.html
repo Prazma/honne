@@ -142,6 +142,9 @@
 				margin-top: 350px;
 				margin-bottom: 20px;
 			}
+			.sharehaf {
+				width: 45%;
+			}
 		</style>
 	</head>
 	<body>
@@ -150,7 +153,7 @@
 			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
 			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
 			<div id="ussis"><input id="username" type="text" placeholder="ニックネーム" value="無名さん" class="texput"><br/><br></div>
-			<input id="text" type="text" placeholder="答え" class="texput"><br><br>
+			<div id="mesi"><select id="mesype" class="btn sharehaf"><option value="投稿：">種類を選択</option><option value="回答：">回答</option><option value="チャット：">チャット</option></select><input id="text" type="text" placeholder="投稿内容" class="texput sharehaf"><br><br></div>
 			<div id="billis"><input id="idbill" type="text" placeholder="ID (オプショナル：返信・いいね・稼ぐの機能が使えます)" class="texput"><br/><br></div>
 			<button id="post" class="btn purp">投稿</button><br>
 			<br>
@@ -164,6 +167,7 @@
 			window.scrollTo(0,document.body.scrollHeight);
 			var myFirebase = new Firebase('https://honne-a16b2.firebaseio.com');
 			var usernameInput = document.querySelector('#username');
+			var chatype = document.querySelector('#mesype');
 			var textInput = document.querySelector('#text');
 			var postButton = document.querySelector('#post');
 			var idnix = document.querySelector('#idbill');
@@ -172,8 +176,9 @@
 				var msgUser = usernameInput.value;
 				var msgText = textInput.value;
 				var idText = idnix.value;
+				var typeText = chatype.value;
 				
-				myFirebase.push({username:msgUser, text:msgText, id:idText});
+				myFirebase.push({username:msgUser, text:msgText, id:idText, type:typeText});
 				textInput.value = "";
 				document.getElementById("billis").style.display = "none";
 				document.getElementById("ussis").style.display = "none";
@@ -186,7 +191,7 @@
 					msgUsernameElement.textContent = msg.username + "(id:" + msg.id +")";
 					
 					var msgTextElement = document.createElement("p");
-					msgTextElement.textContent = msg.text;
+					msgTextElement.textContent = msg.type + msg.text;
 					
 					var msgElement = document.createElement("div");
 					msgElement.appendChild(msgUsernameElement);

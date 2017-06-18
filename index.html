@@ -150,10 +150,11 @@
 	<body>
 		<div style="text-align: center;" id="input">
 			<br>
+			<div id="nixon"><span id="desc">アカウントがいらないチャット・掲示板SNSサイト</span><br></div>
 			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
 			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
-			<div id="ussis"><input id="username" type="text" placeholder="ニックネーム" value="無名さん" class="texput"><br/><br></div>
-			<div id="mesi"><select id="mesype" class="btn sharehaf"><option value="投稿：">種類を選択</option><option value="回答：">回答</option><option value="質問投稿への回答：">質問投稿への回答</option><option value="チャット：">チャット</option><option value="＜＜質問＞＞">質問</option><option value="（つぶやき）">つぶやき</option><option value="「お知らせ！」">お知らせ</option></select><input id="text" type="text" placeholder="投稿内容" class="texput sharehaf"><br><br></div>
+			<div id="ussis"><input id="username" type="text" placeholder="ニックネーム" class="texput"><br/><br></div>
+			<div id="mesi"><select id="mesype" class="btn sharehaf"><option value="投稿：">種類を選択</option><option value="回答：">回答</option><option value="質問投稿への回答：">質問投稿への回答</option><option value="チャット：">チャット</option><option value="＜＜質問＞＞">質問</option><option value="（つぶやき）">つぶやき</option><option value="「お知らせ！」">お知らせ</option><option value="＜＜しりとりを始めました＞＞：">しりとりを始める</option><option value="＜＜しりとり（返信）＞＞">しりとりへ投稿する</option><option value="＜＜しりとりをやめました＞＞：">しりとりをやめる</option></select><input id="text" type="text" placeholder="投稿内容" class="texput sharehaf"><br><br></div>
 			<div id="billis"><input id="idbill" type="text" placeholder="ID (オプショナル：返信・いいね・稼ぐの機能が使えます)" class="texput"><br/><br></div>
 			<button id="post" class="btn purp">投稿</button><br>
 			<br>
@@ -173,8 +174,18 @@
 			var idnix = document.querySelector('#idbill');
 			
 			postButton.addEventListener("click", function() {
-				var msgUser = usernameInput.value;
-				var msgText = textInput.value;
+				var dog = usernameInput.value;
+				if(dog == "") {
+					var msgUser = "無名さん";
+				} else {
+					var msgUser = usernameInput.value;
+				}
+				var cat = textInput.value;
+				if(cat == "") {
+					var msgText = " . . . ";
+				} else {
+					var msgText = textInput.value;
+				}
 				var idText = idnix.value;
 				var typeText = chatype.value;
 				
@@ -182,6 +193,7 @@
 				textInput.value = "";
 				document.getElementById("billis").style.display = "none";
 				document.getElementById("ussis").style.display = "none";
+				document.getElementById("nixon").style.display = "none";
 				document.getElementById("odai").style.fontSize = "15px";
 			});
 			

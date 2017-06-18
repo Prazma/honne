@@ -186,7 +186,12 @@
 				} else {
 					var msgText = textInput.value;
 				}
-				var idText = idnix.value;
+				var liz = idnix.value;
+				if(liz == "") {
+					var idText = "none";
+				}else {
+					var idText = idnix.value;
+				}
 				var typeText = chatype.value;
 				
 				myFirebase.push({username:msgUser, text:msgText, id:idText, type:typeText});

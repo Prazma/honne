@@ -126,21 +126,22 @@
 				color: #ffffff;
 				transition: 0.5s;
 				-webkit-transition: 0.5s;
+				z-index: 500;
 			}
 			#odai {
 				font-size: 20px;
 			}
 			#input {
 				position: fixed;
-				top: 0;
+				bottom: 0;
 				width: 100%;
 				background: #f1f1f1;
-				box-shadow: 0px 5px 5px #888888;
+				box-shadow: 0px -5px 5px #888888;
 				z-index: 500;
 			}
 			#results {
 				margin-top: 350px;
-				margin-bottom: 20px;
+				margin-bottom: 220px;
 			}
 			.sharehaf {
 				width: 45%;
@@ -186,12 +187,7 @@
 				} else {
 					var msgText = textInput.value;
 				}
-				var liz = idnix.value;
-				if(liz == "") {
-					var idText = "none";
-				}else {
-					var idText = idnix.value;
-				}
+				var idText = idnix.value;
 				var typeText = chatype.value;
 				
 				myFirebase.push({username:msgUser, text:msgText, id:idText, type:typeText});

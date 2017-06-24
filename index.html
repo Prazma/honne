@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>HonNet - アカウントがいらないチャット・掲示板SNSサイト</title>
+		<title>HonNet - アカウントがいらないチャット・しりとり・掲示板SNSサイト</title>
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<script src='https://cdn.firebase.com/js/client/2.4.0/firebase.js'></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -150,19 +150,34 @@
 	</head>
 	<body>
 		<div style="text-align: center;" id="input">
-			<br>
-			<div id="nixon"><span id="desc">アカウントがいらないチャット・掲示板SNSサイト</span><br></div>
-			<span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br>
-			<span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br>
-			<div id="ussis"><input id="username" type="text" placeholder="ニックネーム" class="texput"><br/><br></div>
-			<div id="mesi"><select id="mesype" class="btn sharehaf"><option value="投稿：">種類を選択</option><option value="回答：">回答</option><option value="質問投稿への回答：">質問投稿への回答</option><option value="チャット：">チャット</option><option value="＜＜質問＞＞">質問</option><option value="（つぶやき）">つぶやき</option><option value="「お知らせ！」">お知らせ</option><option value="＜＜しりとりを始めました＞＞：">しりとりを始める</option><option value="＜＜しりとり（返信）＞＞">しりとりへ投稿する</option><option value="＜＜しりとりをやめました＞＞：">しりとりをやめる</option></select><input id="text" type="text" placeholder="投稿内容" class="texput sharehaf"><br><br></div>
-			<div id="billis"><input id="idbill" type="text" placeholder="ID (オプショナル：返信・いいね・稼ぐの機能が使えます)" class="texput"><br/><br></div>
-			<button id="post" class="btn purp">投稿</button><br>
-			<br>
+			<div id="join">
+				<div id="odaip">
+				<br>
+					<span><strong>お題 : ひまな時、何をする？</strong></span><br>
+				</div>
+				<button onclick="sanka()" class="purp" id="sankari">参加する</button>
+			</div>
+			<div id="sendform" style="display: none;">
+				<br><div id="nixon"><span id="desc">アカウントがいらないチャット・掲示板SNSサイト</span><br></div><span id="odai"><strong>お題 : ひまな時、何をする？</strong></span><br><span id="awards">選ばれた投稿の投稿者には５万円！</span><br><br><div><input id="username" type="text" placeholder="ニックネーム" class="texput"><br/><br></div><div id="mesi"><select id="mesype" class="btn sharehaf"><option value="投稿：">種類を選択</option><option value="回答：">回答</option><option value="質問投稿への回答：">質問投稿への回答</option><option value="チャット：">チャット</option><option value="＜＜質問＞＞">質問</option><option value="（つぶやき）">つぶやき</option><option value="「お知らせ！」">お知らせ</option><option value="＜＜しりとりを始めました＞＞：">しりとりを始める</option><option value="＜＜しりとり（返信）＞＞">しりとりへ投稿する</option><option value="＜＜しりとりをやめました＞＞：">しりとりをやめる</option></select><input id="text" type="text" placeholder="投稿内容" class="texput sharehaf"><br><br></div><div id="billis"><input id="idbill" type="text" placeholder="ID (オプショナル：返信・いいね・稼ぐの機能が使えます)" class="texput"><br/><br></div>
+				<button id="post" class="btn purp" style="width: 45%;">投稿</button>
+				<button class="btn" style="width: 45%;" onclick="clskey()">閉じる</button>
+				<br>
+				<br>
+			</div>
 		</div>
 		<div id="results"></div>
 		<div id="scrollis">©2017 BitFinity Inc</div>
 		<script>
+			function sanka() {
+				document.getElementById("join").style.display = "none";
+				document.getElementById("sendform").style.display = "";
+			}
+			function clskey() {
+				document.getElementById("sankari").innerHTML = "開ける";
+				document.getElementById("join").style.display = "";
+				document.getElementById("sendform").style.display = "none";
+				document.getElementById("odaip").style.display = "none";
+			}
 			setTimeout( function () {
 				document.getElementById("splash").style.display = "none";
 			}, 2000)
